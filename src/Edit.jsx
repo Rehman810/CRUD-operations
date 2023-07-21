@@ -7,10 +7,11 @@ import { useNavigate } from "react-router-dom";
 
 function Edit(props) {
   let navigate = useNavigate();
+  const options = ["active", "Inactive"];
 
   const [title, setTitle] = useState("");
   const [id, setId] = useState("");
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState(options[0]);
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -59,6 +60,16 @@ function Edit(props) {
                 onChange={(e) => setTitle(e.target.value)}
               />
             </Form.Group>
+            <div>
+              <select
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+              >
+                {options.map((option, idx) => (
+                  <option key={idx}>{option}</option>
+                ))}
+              </select>
+            </div>
           </Form>
         </Modal.Body>
         <Modal.Footer>
