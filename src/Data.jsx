@@ -1,22 +1,22 @@
 const Data = [
   {
     id: "1",
-    title: "Mother",
+    title: "mother",
     state: "active",
   },
   {
     id: "2",
-    title: "Father",
+    title: "father",
     state: "Inactive",
   },
   {
     id: "3",
-    title: "Brother",
+    title: "brother",
     state: "active",
   },
   {
     id: "4",
-    title: "Sister",
+    title: "sister",
     state: "Inactive",
   },
 ];

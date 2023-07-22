@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { Button, Table } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Data from "./Data";
@@ -29,7 +29,20 @@ const Home = () => {
       }
     });
   };
-
+  const [state, setstate] = useState({
+    query: "",
+    list: [],
+  });
+  const handleChange = (e) => {
+    const results = Data.filter((item) => {
+      if (e.target.value === "") return item;
+      return item.title.toLowerCase().includes(e.target.value.toLowerCase());
+    });
+    setstate({
+      query: e.target.value,
+      list: results,
+    });
+  };
   return (
     <>
       <Fragment>
@@ -39,6 +52,17 @@ const Home = () => {
             width: "65%",
           }}
         >
+          <div class="form-group">
+            <input
+              type="search"
+              class="form-control"
+              id="formGroupExampleInput"
+              placeholder="Serach Title"
+              style={{ marginBottom: 20 }}
+              onChange={handleChange}
+              value={state.query}
+            />
+          </div>
           <Table striped borderd hover size="sm">
             <thead>
               <tr>
@@ -56,8 +80,8 @@ const Home = () => {
               </tr>
             </thead>
             <tbody>
-              {Data && Data.length > 0
-                ? Data.map((item) => {
+              {state.query
+                ? state.list.map((item) => {
                     return (
                       <tr>
                         <td>{item.title}</td>
@@ -84,7 +108,33 @@ const Home = () => {
                       </tr>
                     );
                   })
-                : "No Data Available"}
+                : Data.map((item) => {
+                    return (
+                      <tr>
+                        <td>{item.title}</td>
+                        <td>{item.state}</td>
+                        <td>
+                          <img
+                            onClick={() => {
+                              handleDelete(item.id);
+                            }}
+                            style={{
+                              width: "30px",
+                              margin: "10px",
+                              cursor: "pointer",
+                            }}
+                            src="https://cdn-icons-png.flaticon.com/512/3687/3687412.png"
+                            alt="delete"
+                          />
+                          <Edit
+                            id={item.id}
+                            title={item.title}
+                            status={item.state}
+                          />
+                        </td>
+                      </tr>
+                    );
+                  })}
             </tbody>
           </Table>
         </div>
